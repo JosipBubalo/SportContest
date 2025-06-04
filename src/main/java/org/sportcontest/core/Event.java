@@ -2,6 +2,7 @@ package org.sportcontest.core;
 
 import java.util.Date;
 
+// Event.java (Core)
 public abstract class Event {
     protected Date time;
     protected String description;
@@ -11,14 +12,12 @@ public abstract class Event {
         this.description = description;
     }
 
-    public Date getTime() {
-        return time;
-    }
-
-    public String getDescription() {
-        return description;
-    }
+    public Date getTime() { return time; }
+    public String getDescription() { return description; }
 
     public abstract String status();
+
+    public abstract void apply(Match match);
 }
+
 

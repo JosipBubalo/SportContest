@@ -1,7 +1,6 @@
 package org.sportcontest.core;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Match {
     private List<Participant> participants;
@@ -9,6 +8,11 @@ public class Match {
     private String sport;
     private Competition competition;
     private List<Event> events;
+    private boolean isStarted = false;
+    private boolean isEnded = false;
+    private Map<String, Integer> yellowCardCount = new HashMap<>();
+    private Set<String> redCardedPlayers = new HashSet<>();
+
 
     public Match(String sport, Competition competition, List<Participant> participants) {
         this.sport = sport;
@@ -17,7 +21,8 @@ public class Match {
         this.events = new ArrayList<>();
     }
 
-    public void addEvent(Event event) {
+    public void applyEvent(Event event) {
+        event.apply(this);
         events.add(event);
     }
 
@@ -25,23 +30,29 @@ public class Match {
         this.result = result;
     }
 
-    public List<Event> getEvents() {
-        return events;
+    public MatchResult getResult() { return result; }
+
+    public void startMatch() { isStarted = true; }
+
+    public void endMatch() { isEnded = true; }
+
+    public boolean isStarted() { return isStarted; }
+
+    public boolean isEnded() { return isEnded; }
+
+    public List<Participant> getParticipants() { return participants; }
+
+    public List<Event> getEvents() { return events; }
+
+    public String getSport() { return sport; }
+
+    public Competition getCompetition() { return competition; }
+
+    public Map<String, Integer> getYellowCardCount() {
+        return yellowCardCount;
     }
 
-    public MatchResult getResult() {
-        return result;
-    }
-
-    public List<Participant> getParticipants() {
-        return participants;
-    }
-
-    public String getSport() {
-        return sport;
-    }
-
-    public Competition getCompetition() {
-        return competition;
+    public Set<String> getRedCardedPlayers() {
+        return redCardedPlayers;
     }
 }
