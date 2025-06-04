@@ -2,24 +2,30 @@ package org.sportcontest.football;
 
 import java.util.Date;
 
-import org.sportcontest.core.Player;
 import org.sportcontest.core.Team;
+import org.sportcontest.core.TeamPlayer;
 import org.sportcontest.core.Match;
 import org.sportcontest.core.Participant;
 
-public class SubstitutionEvent extends FootballEvent {
-    private String playerOut;
-    private String playerIn;
+import java.util.Optional;
 
-    public SubstitutionEvent(Date time, String playerOut, String playerIn) {
-        super(time, "Substitution: " + playerOut + " out, " + playerIn + " in");
-        this.playerOut = playerOut;
-        this.playerIn = playerIn;
+public class SubstitutionEvent extends FootballEvent {
+    private int numberOut;
+    private String playerInName;
+    private int playerInNumber;
+    private String playerInPosition;
+
+    public SubstitutionEvent(Date time, int numberOut, String playerInName, int playerInNumber, String playerInPosition) {
+        super(time, "Substitution: #" + numberOut + " out, " + playerInName + " in");
+        this.numberOut = numberOut;
+        this.playerInName = playerInName;
+        this.playerInNumber = playerInNumber;
+        this.playerInPosition = playerInPosition;
     }
 
     @Override
     public String status() {
-        return playerOut + " replaced by " + playerIn + " at " + time;
+        return "Substitution at " + time + ": #" + numberOut + " out, #" + playerInNumber + " " + playerInName + " in";
     }
 
     @Override
@@ -28,17 +34,18 @@ public class SubstitutionEvent extends FootballEvent {
             if (p instanceof Team) {
                 Team team = (Team) p;
 
-                // Find the outgoing player
-                Player outPlayer = team.getPlayers().stream()
-                        .filter(player -> player.getName().equals(playerOut))
-                        .findFirst()
-                        .orElse(null);
+                // Find the player to be subbed out
+                Optional<TeamPlayer> toRemove = team.getTeamPlayers().stream()
+                        .filter(tp -> tp.getNumber() == numberOut)
+                        .findFirst();
 
-                if (outPlayer != null) {
-                    team.removePlayer(outPlayer);
-                    team.addPlayer(new Player(playerIn, 0)); // Rank can be adjusted as needed
-                    break; // Only one team should be affected
+                if (toRemove.isPresent()) {
+                    team.removeTeamPlayer(toRemove.get());
+
+                    TeamPlayer newPlayer = new TeamPlayer(playerInName, playerInNumber, playerInPosition);
+                    team.addTeamPlayer(newPlayer);
                 }
+                break; // Only one team should be affected
             }
         }
     }

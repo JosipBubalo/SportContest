@@ -7,31 +7,31 @@ import java.util.Map;
 import java.util.Set;
 
 public class YellowCardEvent extends FootballEvent {
-    private String player;
+    private int playerNumber;
 
-    public YellowCardEvent(Date time, String player) {
-        super(time, "Yellow card for " + player);
-        this.player = player;
+    public YellowCardEvent(Date time, int playerNumber) {
+        super(time, "Yellow card for #" + playerNumber);
+        this.playerNumber = playerNumber;
     }
 
     @Override
     public String status() {
-        return "Yellow card to " + player + " at " + time;
+        return "Yellow card to #" + playerNumber + " at " + time;
     }
 
     @Override
     public void apply(Match match) {
-        Map<String, Integer> countMap = match.getYellowCardCount();
-        Set<String> redCarded = match.getRedCardedPlayers();
+        Map<String, Integer> yellowMap = match.getYellowCardCount();
+        Set<String> redSet = match.getRedCardedPlayers();
 
-        int newCount = countMap.getOrDefault(player, 0) + 1;
-        countMap.put(player, newCount);
+        String key = String.valueOf(playerNumber);
+        int count = yellowMap.getOrDefault(key, 0) + 1;
+        yellowMap.put(key, count);
 
-        if (newCount >= 2 && !redCarded.contains(player)) {
-            // Automatically issue red card
-            RedCardEvent redCard = new RedCardEvent(time, player, true);
-            redCard.apply(match);
-            match.applyEvent(redCard);  // Log it too
+        if (count >= 2 && !redSet.contains(key)) {
+            RedCardEvent redCard = new RedCardEvent(time, playerNumber, true);
+            redCard.apply(match);              // Actually ejects player
+            match.applyEvent(redCard);         // Logs red card event
         }
     }
 }

@@ -35,6 +35,13 @@ public class FootballResult extends MatchResult {
 
     @Override
     public String getPhase() {
+        boolean isTie = homeGoals == awayGoals;
+        if (match != null && match.getCompetition() != null) {
+            String type = match.getCompetition().getTypeComp().toLowerCase();
+            if ((type.contains("knockout") || type.contains("elimination")) && isTie) {
+                return "Extra-time";
+            }
+        }
         return "Full-time";
     }
 }

@@ -1,26 +1,26 @@
 package org.sportcontest.core;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Team extends Participant {
-    private List<Player> players;
+    private Set<TeamPlayer> teamPlayers;
 
     public Team(String name) {
         super(name);
-        this.players = new ArrayList<>();
+        this.teamPlayers = new HashSet<>();
     }
 
-    public void addPlayer(Player player) {
-        players.add(player);
+    public void addTeamPlayer(TeamPlayer player) {
+        teamPlayers.add(player);
     }
 
-    public void removePlayer(Player player) {
-        players.remove(player);
+    public void removeTeamPlayer(TeamPlayer player) {
+        teamPlayers.remove(player);
     }
 
-    public List<Player> getPlayers() {
-        return players;
+    public Set<TeamPlayer> getTeamPlayers() {
+        return teamPlayers;
     }
 
     @Override

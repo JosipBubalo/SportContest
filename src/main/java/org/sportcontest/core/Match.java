@@ -28,6 +28,7 @@ public class Match {
 
     public void setResult(MatchResult result) {
         this.result = result;
+        result.setMatch(this);
     }
 
     public MatchResult getResult() { return result; }
