@@ -16,6 +16,6 @@ public class TieBreakEvent extends TennisEvent {
 
     @Override
     public void apply(Match match) {
-        // Log only for now
+        // Just to log event
     }
 }

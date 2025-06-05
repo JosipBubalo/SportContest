@@ -30,8 +30,8 @@ public class YellowCardEvent extends FootballEvent {
 
         if (count >= 2 && !redSet.contains(key)) {
             RedCardEvent redCard = new RedCardEvent(time, playerNumber, true);
-            redCard.apply(match);              // Actually ejects player
-            match.applyEvent(redCard);         // Logs red card event
+            redCard.apply(match);
+            match.applyEvent(redCard);
         }
     }
 }

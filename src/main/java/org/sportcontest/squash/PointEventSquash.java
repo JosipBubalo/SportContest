@@ -19,6 +19,6 @@ public class PointEventSquash extends SquashEvent {
 
     @Override
     public void apply(Match match) {
-        // Optional: Add real-time tracking later
+        // Implementation
     }
 }

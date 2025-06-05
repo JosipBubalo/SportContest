@@ -16,6 +16,6 @@ public class MedicalTimeOutEvent extends TennisEvent {
 
     @Override
     public void apply(Match match) {
-        // Log only
+        // Just to log event
     }
 }

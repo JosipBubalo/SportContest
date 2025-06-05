@@ -2,7 +2,6 @@ package org.sportcontest.core;
 
 import java.util.Date;
 
-// Event.java (Core)
 public abstract class Event {
     protected Date time;
     protected String description;

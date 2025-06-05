@@ -16,7 +16,6 @@ public class HalftimeEvent extends FootballEvent {
 
     @Override
     public void apply(Match match) {
-        // No structural change in match or result, just log the event
-        // Could add a phase tracking system in the future if needed
+        // Just to log event
     }
 }

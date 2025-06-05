@@ -8,13 +8,11 @@ import org.sportcontest.core.TeamPlayer;
 import java.util.Date;
 
 public class VarCheckEvent extends FootballEvent {
-    private String checkType; // "goal" or "redcard"
-    private String teamName;  // for goal
-
-    private String playerName; // for red card
-    private Integer playerNumber; // for red card
-
-    private String playerPosition; // for red card
+    private String checkType;
+    private String teamName;
+    private String playerName;
+    private Integer playerNumber;
+    private String playerPosition;
 
     public VarCheckEvent(Date time, String teamName) {
         super(time, "VAR Check: Goal disallowed for " + teamName);
@@ -42,22 +40,18 @@ public class VarCheckEvent extends FootballEvent {
     @Override
     public void apply(Match match) {
         if ("goal".equals(checkType)) {
-            // Reverse a goal for the team
             if (match.getResult() instanceof FootballResult) {
                 ((FootballResult) match.getResult()).goalRemoved(teamName);
             }
         } else if ("redcard".equals(checkType)) {
-            // Remove from red carded list and (optionally) restore player to team
             String playerKey = String.valueOf(playerNumber);
             match.getRedCardedPlayers().remove(playerKey);
 
             for (Participant p : match.getParticipants()) {
                 if (p instanceof Team team) {
-                    // Avoid re-adding player if already present
                     boolean alreadyThere = team.getTeamPlayers().stream()
                             .anyMatch(tp -> tp.getNumber() == playerNumber);
                     if (!alreadyThere) {
-                        // This assumes we know name/position — could store in a map if needed
                         team.addTeamPlayer(new TeamPlayer(playerName, playerNumber, playerPosition));
                     }
                 }

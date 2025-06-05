@@ -34,7 +34,6 @@ public class SubstitutionEvent extends FootballEvent {
             if (p instanceof Team) {
                 Team team = (Team) p;
 
-                // Find the player to be subbed out
                 Optional<TeamPlayer> toRemove = team.getTeamPlayers().stream()
                         .filter(tp -> tp.getNumber() == numberOut)
                         .findFirst();
@@ -45,7 +44,7 @@ public class SubstitutionEvent extends FootballEvent {
                     TeamPlayer newPlayer = new TeamPlayer(playerInName, playerInNumber, playerInPosition);
                     team.addTeamPlayer(newPlayer);
                 }
-                break; // Only one team should be affected
+                break;
             }
         }
     }

@@ -19,6 +19,6 @@ public class PointEventTennis extends TennisEvent {
 
     @Override
     public void apply(Match match) {
-        // Can be extended to track points
+        // Implementation
     }
 }

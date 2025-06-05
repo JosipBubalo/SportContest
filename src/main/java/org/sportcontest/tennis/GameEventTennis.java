@@ -19,6 +19,6 @@ public class GameEventTennis extends TennisEvent {
 
     @Override
     public void apply(Match match) {
-        // Future support: game count
+        // Implementation
     }
 }
